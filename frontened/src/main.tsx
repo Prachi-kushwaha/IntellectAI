@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
   import { createRoot } from 'react-dom/client'
   import './index.css'
-  import App from './App.tsx'
+  import App from './App'
   import { ClerkProvider } from '@clerk/clerk-react'
 
   // Import your Publishable Key
@@ -10,6 +10,9 @@ import { StrictMode } from 'react'
   if (!PUBLISHABLE_KEY) {
     throw new Error('Add your Clerk Publishable Key to the .env file')
   }
+
+
+
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
