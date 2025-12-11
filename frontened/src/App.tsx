@@ -1,16 +1,17 @@
-
-import SignUpPage from './components/signup';
-
-// import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/clerk-react';
+import { Routes, Route } from "react-router-dom";
+import { SignupForm } from "./components/signup-form";
+import Dashboard from "./Dashboard";
 
 function App() {
   return (
+    <Routes>
+      <Route path="/sign-up" element={<SignupForm />} />
+      <Route path="/dashboard" element={<Dashboard />} />
 
-    <header>
-      <SignUpPage/>
-
-    </header>
+      {/* Default Route */}
+      <Route path="/" element={<SignupForm />} />
+    </Routes>
   );
 }
 
-export default App
+export default App;

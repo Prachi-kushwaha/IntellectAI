@@ -5,27 +5,33 @@ import { generateToken } from '../utils/token';
 
 export const postUserInfo = async (req: Request, res: Response) => {
   try {
-    const { userId, email, firstName, lastName, password, username } = req.body
+    const { email, fullName, password, username } = req.body
 
     // Validate input (security)
-    if (!userId || !email || !firstName || !password || !username) {
+    if (!email || !fullName|| !password || !username) {
       return res.status(400).json({ error: "Missing required fields" })
     }
      const hashed = await bcrypt.hash(password, 10)
 
+     const existingUser = await prisma.user.findUnique({
+  where: { email },
+});
+
+if (existingUser) {
+  return res.status(400).json({ error: "Email already exists" });
+}
+
     // Prisma in try block (correct)
     const user = await prisma.user.create({
       data: {
-        clerkId: userId,
         email,
-        firstName,
-        lastName,
+        fullName,
         username,
         password:hashed
       },
     })
 
-    const token = generateToken({ userId: user.clerkId , email: user.email })
+    const token = generateToken({ id: user.id , email: user.email })
 
     return res.status(201).json({user, token})
 
@@ -57,21 +63,20 @@ export const loginUser = async (req: Request, res: Response) => {
     }
 
     // 2. Compare password
-    const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = bcrypt.compare(password, user.password!)
     if (!isMatch) {
       return res.status(401).json({ error: "Invalid email or password" })
     }
 
-    const token = generateToken({ userId: user.clerkId , email: user.email })
+    const token = generateToken({ id: user.id , email: user.email })
 
      return res.status(200).json({
       message: "Login successful",
       token,
       user: {
-        clerkId: user.clerkId,
+        id: user.id,
         email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        fullName: user.fullName,
       },
     });
 
@@ -84,13 +89,13 @@ export const loginUser = async (req: Request, res: Response) => {
 
 export const getUserInfo = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params
-    if (!userId) {
-        return res.status(400).json({ error: "Missing userId parameter" })
+    const { id } = req.params
+    if (!id) {
+        return res.status(400).json({ error: "Missing id parameter" })
     }
 
     const user = await prisma.user.findUnique({
-      where: { clerkId:userId },
+      where: { id:Number(id) },
     })
     if (!user) {
       return res.status(404).json({ error: "User not found" })
@@ -107,14 +112,14 @@ export const getUserInfo = async (req: Request, res: Response) => {
 
 export const updateUserInfo = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params
-    const { email, firstName, lastName } = req.body
-    if (!userId) {
-        return res.status(400).json({ error: "Missing userId parameter" })
+    const { id } = req.params
+    const { email, fullName} = req.body
+    if (!id) {
+        return res.status(400).json({ error: "Missing id parameter" })
     }
     const user = await prisma.user.update({
-      where: { clerkId: userId },
-      data: { email, firstName, lastName },
+      where: { id:Number(id) },
+      data: { email, fullName },
     })
     return res.status(200).json(user)
     } catch (error: any) {
@@ -127,12 +132,12 @@ export const updateUserInfo = async (req: Request, res: Response) => {
 
 export const deleteUserInfo = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params
-    if (!userId) {
-        return res.status(400).json({ error: "Missing userId parameter" })
+    const { id } = req.params
+    if (!id) {
+        return res.status(400).json({ error: "Missing id parameter" })
     }
     await prisma.user.delete({
-        where: { clerkId: userId },
+        where: { id:Number(id) },
     })
     return res.status(204).send()
   }
@@ -146,16 +151,16 @@ export const deleteUserInfo = async (req: Request, res: Response) => {
 
 export const setUserNewPassword = async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params
+    const { id } = req.params
     const { newPassword, email } = req.body
 
-    if (!userId || !newPassword || !email) {
+    if (!id || !newPassword || !email) {
       return res.status(400).json({ error: "Missing required fields" })
     }
 
     // Step 1: Find the user by Clerk ID
     const user = await prisma.user.findUnique({
-      where: { clerkId: userId },
+      where: {id:Number(id) },
     })
 
     if (!user) {
@@ -172,7 +177,7 @@ export const setUserNewPassword = async (req: Request, res: Response) => {
 
     // Step 4: Update password
     await prisma.user.update({
-      where: { clerkId: userId },
+      where: { id:Number(id) },
       data: { password: hashed },
     })
 

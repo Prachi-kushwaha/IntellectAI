@@ -24,6 +24,8 @@ export default function SignUpPage() {
         firstName: user.firstName,
         lastName: user.lastName,
       }),
+    }).finally(() => {
+      window.location.href = "/dashboard";
     });
   }, [isLoaded, user]);
 

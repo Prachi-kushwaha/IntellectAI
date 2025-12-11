@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
-import { clerkMiddleware } from '@clerk/express';
 import cors from 'cors';
+import userRoutes from './src/router/clerkRouter';
 
 const app = express();
 
@@ -12,9 +12,9 @@ app.use(
     credentials: true,
   })
 );
-app.options("*", cors());
+app.use(cors());
 app.use(express.json());
-app.use(clerkMiddleware());
+app.use("/", userRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
