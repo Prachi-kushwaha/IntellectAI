@@ -11,11 +11,12 @@ export const postUserInfo = async (req: Request, res: Response) => {
     if (!email || !fullName|| !password || !username) {
       return res.status(400).json({ error: "Missing required fields" })
     }
-     const hashed = await bcrypt.hash(password, 10)
+      const hashed = await bcrypt.hash(password, 10)
 
      const existingUser = await prisma.user.findUnique({
   where: { email },
 });
+
 
 if (existingUser) {
   return res.status(400).json({ error: "Email already exists" });
