@@ -2,6 +2,10 @@ import { Routes, Route } from "react-router-dom";
 import { SignupForm } from "./components/signup-form";
 import Dashboard from "./Dashboard";
 import Home from "./pages/home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import SignIn from "./pages/Signin";
+import SignUp from "./pages/Signup";
 
 function App() {
   return (
@@ -9,6 +13,12 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path="/sign-up" element={<SignupForm />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
+
+
 
       {/* Default Route */}
       {/* <Route path="/" element={<SignupForm />} /> */}
