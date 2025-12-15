@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import userRoutes from './src/router/clerkRouter';
+import oauthRoutes from './src/router/oauthRouter'
 
 const app = express();
 
@@ -15,10 +16,11 @@ app.use(
 app.use(cors());
 app.use(express.json());
 app.use("/", userRoutes);
+app.use("/shopify", oauthRoutes)
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+// app.get('/', (req, res) => {
+//   res.send('Hello, World!');
+// });
 
 const PORT = process.env.PORT || 3000;
 

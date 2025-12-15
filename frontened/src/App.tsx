@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import SignIn from "./pages/Signin";
 import SignUp from "./pages/Signup";
+import ShopifyMcp from "./components/ShopifyMcp";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route path="/contact" element={<Contact />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/shopifyMcp" element={<ShopifyMcp />} />
 
 
 

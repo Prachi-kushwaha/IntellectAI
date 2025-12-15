@@ -1,29 +1,36 @@
+import { Link } from "react-router-dom"
+
 const useCases = [
   {
     title: "Shopify MCP",
     description:
       "Let AI answer questions, analyze sales, and explore products using your live Shopify data — securely and in real time.",
     tag: "E-commerce",
+    path: "/ShopifyMcp",
   },
   {
     title: "GitHub MCP",
     description:
       "Expose repositories, issues, pull requests, and commits to AI for smarter code understanding and developer workflows.",
     tag: "Developers",
+    path: "/githubMcp",
   },
   {
     title: "Internal Tools MCP",
     description:
       "Connect databases, CRMs, or internal services so AI can query and reason over your company’s private data.",
     tag: "Startups",
+    path: "/mcp/internal-tools",
   },
   {
     title: "AI Agents",
     description:
       "Build intelligent agents that can plan, reason, and act across multiple MCP-powered tools — safely and controllably.",
     tag: "Automation",
+    path: "/agents",
   },
 ]
+
 
 const UseCases = () => {
   return (
@@ -42,10 +49,11 @@ const UseCases = () => {
 
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {useCases.map((item, index) => (
-            <div
-              key={index}
-              className="rounded-xl border border-gray-800 bg-gray-900/40 p-6 hover:border-indigo-500 transition"
+          {useCases.map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className="group rounded-xl border border-gray-800 bg-gray-900/40 p-6 hover:border-indigo-500 transition"
             >
               <div className="mb-3">
                 <span className="text-xs uppercase tracking-wide text-indigo-400">
@@ -53,14 +61,14 @@ const UseCases = () => {
                 </span>
               </div>
 
-              <h3 className="text-xl font-semibold mb-3">
+              <h3 className="text-xl font-semibold mb-3 group-hover:text-indigo-400 transition">
                 {item.title}
               </h3>
 
               <p className="text-gray-400 text-sm leading-relaxed">
                 {item.description}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

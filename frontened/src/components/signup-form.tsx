@@ -51,7 +51,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 
     if (res.ok) {
       localStorage.setItem("token", data.token);
-localStorage.setItem("userId", data.user.id);
+      localStorage.setItem("userId", data.user.id);
 
       alert("Account created!");
       navigate("/home");

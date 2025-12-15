@@ -96,7 +96,7 @@ export const getUserInfo = async (req: Request, res: Response) => {
     }
 
     const user = await prisma.user.findUnique({
-      where: { id:Number(id) },
+      where: { id:id},
     })
     if (!user) {
       return res.status(404).json({ error: "User not found" })
@@ -119,7 +119,7 @@ export const updateUserInfo = async (req: Request, res: Response) => {
         return res.status(400).json({ error: "Missing id parameter" })
     }
     const user = await prisma.user.update({
-      where: { id:Number(id) },
+      where: { id:id },
       data: { email, fullName },
     })
     return res.status(200).json(user)
@@ -138,7 +138,7 @@ export const deleteUserInfo = async (req: Request, res: Response) => {
         return res.status(400).json({ error: "Missing id parameter" })
     }
     await prisma.user.delete({
-        where: { id:Number(id) },
+        where: { id:id },
     })
     return res.status(204).send()
   }
@@ -161,7 +161,7 @@ export const setUserNewPassword = async (req: Request, res: Response) => {
 
     // Step 1: Find the user by Clerk ID
     const user = await prisma.user.findUnique({
-      where: {id:Number(id) },
+      where: {id:id },
     })
 
     if (!user) {
@@ -178,7 +178,7 @@ export const setUserNewPassword = async (req: Request, res: Response) => {
 
     // Step 4: Update password
     await prisma.user.update({
-      where: { id:Number(id) },
+      where: { id:id },
       data: { password: hashed },
     })
 

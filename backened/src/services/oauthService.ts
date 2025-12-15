@@ -41,12 +41,12 @@ export const saveStoreInfo = async (req: Request, res: Response) => {
 export const getShopifyAuthUrl = (req: Request, res: Response) => {
   const { shop } = req.query
 
-  if (!shop || typeof shop !== "string" || !shop.endsWith(".myshopify.com")) {
+  if (!shop || typeof shop !== "string") {
     return res.status(400).json({ error: "Invalid shop domain" })
   }
 
   const redirectUri = encodeURIComponent(
-    "https://api.yoursite.com/api/shopify/callback"
+    "http://localhost:3000/shopify/callback"
   )
 
   const scopes = "read_products,read_orders,read_customers,read_inventory"
