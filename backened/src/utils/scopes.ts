@@ -1,0 +1,16 @@
+export const SHOPIFY_READ_SCOPES = [
+  "read_products",
+  "read_orders",
+  "read_customers",
+  "read_inventory",
+  "read_product_listings",
+  "read_discounts",
+  "read_price_rules",
+  "read_fulfillments",
+  "read_shipping",
+  "read_analytics",
+  "read_reports",
+  "read_metaobjects",
+  "read_metaobject_definitions",
+  "read_content",
+]

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "module": "NodeNext",
+    "module": "Nodenext",
     "moduleResolution": "NodeNext",
     "rootDir": "src",
     "outDir": "dist",

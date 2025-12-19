@@ -29,7 +29,7 @@ const ShopifyMcp = () => {
     alert(data.error || "Failed to save store")
     return
   }
-
+ console.log("hello 32")
   // STEP 3 — ask backend for Shopify auth URL
   const authRes = await fetch(
     `${import.meta.env.VITE_API_URL}/shopify/auth-url?shop=${storeDomain}`,
@@ -40,8 +40,9 @@ const ShopifyMcp = () => {
       },
     }
   )
-
+console.log("hello43")
  const authData = await authRes.json()
+ console.log(authData)
 
 if (!authData.authUrl) {
   console.error("Shopify auth URL missing:", authData)

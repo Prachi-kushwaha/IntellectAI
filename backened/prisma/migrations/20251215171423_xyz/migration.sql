@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "ShopifyStore" ALTER COLUMN "scopes" SET NOT NULL,
+ALTER COLUMN "scopes" SET DATA TYPE TEXT;

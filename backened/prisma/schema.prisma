@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
@@ -29,7 +29,7 @@ model ShopifyStore {
   userId        String
   storeName     String   @unique
   storeDomain   String   @unique
-  scopes        String[]
+  scopes        String
   accessToken   String?  @unique
   user          User     @relation(fields: [userId], references: [id])
   createdAt     DateTime @default(now())
